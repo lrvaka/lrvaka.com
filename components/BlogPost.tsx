@@ -10,7 +10,7 @@ import imageUrlBuilder from "@sanity/image-url";
 import Refractor from "react-refractor";
 import js from "refractor/lang/javascript";
 import sh from "refractor/lang/bash";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 
 const builder = imageUrlBuilder(client);
@@ -21,6 +21,41 @@ Refractor.registerLanguage(sh);
 type Props = {
   post: any;
 };
+
+// const PageViews = ({ page }) => {
+//   const [pageViews, setPageViews] = useState(0);
+
+//   useEffect(() => {
+//     const fetchPageViews = async () => {
+//       try {
+//         const response = await fetch(
+//           `https://umami-lrvaka-com.vercel.app/api/login`,
+//           {
+//             method: "POST",
+//             headers: {
+//               "Content-Type": "application/json",
+//             },
+//             body: JSON.stringify({
+//               username: "lrvaka",
+//               password: "wrether123",
+//             }),
+//           }
+//         );
+
+//         const data = await response.json();
+//         console.log(data);
+
+//         return data;
+//       } catch (error) {
+//         console.error(error);
+//       }
+//     };
+
+//     fetchPageViews();
+//   }, [page]);
+
+//   return <div>{pageViews}</div>;
+// };
 
 export function Code(props: any) {
   const [copied, setCopied] = useState(false);
@@ -95,7 +130,33 @@ const components = {
 
 const BlogPost: React.FC<Props> = ({ post }) => {
   const imageProps: any = useNextSanityImage(client, post.mainImage);
-  console.log({ post });
+
+  useEffect(() => {
+    const fetchPageViews = async () => {
+      try {
+        const response = await fetch(
+          `https://umami-lrvaka-com.vercel.app/api/auth/login`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: "lrvaka",
+              password: "wrether123",
+            }),
+          }
+        );
+
+        const data = await response.json();
+        console.log(data);
+        return data;
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchPageViews();
+  }, []);
 
   return (
     <>
