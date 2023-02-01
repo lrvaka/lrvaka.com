@@ -21,7 +21,7 @@ Refractor.registerLanguage(sh);
 
 type Props = {
   post: any;
-  monthlyPageViews: any;
+  monthlyPageViews?: any;
 };
 
 export function Code(props: any) {
