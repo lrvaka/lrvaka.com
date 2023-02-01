@@ -38,7 +38,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <Script
         async
         defer
-        data-website-id="557164a2-ea11-4094-99c5-21a7f50cac08"
+        data-website-id="5508f933-9bbf-4bfa-962c-db9b69428f34"
         src="https://umami-lrvaka-com.vercel.app/umami.js"
       />
 
