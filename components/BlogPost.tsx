@@ -6,6 +6,7 @@ import { useNextSanityImage } from "next-sanity-image";
 import { parseISO, format } from "date-fns";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import imageUrlBuilder from "@sanity/image-url";
+import UmamiAPIClient from "umami-api";
 
 import Refractor from "react-refractor";
 import js from "refractor/lang/javascript";
@@ -21,41 +22,6 @@ Refractor.registerLanguage(sh);
 type Props = {
   post: any;
 };
-
-// const PageViews = ({ page }) => {
-//   const [pageViews, setPageViews] = useState(0);
-
-//   useEffect(() => {
-//     const fetchPageViews = async () => {
-//       try {
-//         const response = await fetch(
-//           `https://umami-lrvaka-com.vercel.app/api/login`,
-//           {
-//             method: "POST",
-//             headers: {
-//               "Content-Type": "application/json",
-//             },
-//             body: JSON.stringify({
-//               username: "lrvaka",
-//               password: "wrether123",
-//             }),
-//           }
-//         );
-
-//         const data = await response.json();
-//         console.log(data);
-
-//         return data;
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     };
-
-//     fetchPageViews();
-//   }, [page]);
-
-//   return <div>{pageViews}</div>;
-// };
 
 export function Code(props: any) {
   const [copied, setCopied] = useState(false);
@@ -134,23 +100,20 @@ const BlogPost: React.FC<Props> = ({ post }) => {
   useEffect(() => {
     const fetchPageViews = async () => {
       try {
-        const response = await fetch(
-          `https://umami-lrvaka-com.vercel.app/api/auth/login`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              username: "lrvaka",
-              password: "wrether123",
-            }),
-          }
+        const umami = new UmamiAPIClient(
+          "umami-lrvaka-com.vercel.app",
+          "lrvaka",
+          "wrether123"
         );
 
-        const data = await response.json();
-        console.log(data);
-        return data;
+        const website = await umami.getWebsiteBy(
+          "domain",
+          "lrvaka-com.vercel.app"
+        );
+
+        const pageviews = await website.getPageviews();
+        const metrics = await website.getMetrics();
+        console.log(pageviews);
       } catch (error) {
         console.error(error);
       }
