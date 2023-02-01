@@ -22,6 +22,7 @@ Refractor.registerLanguage(sh);
 type Props = {
   post: any;
   monthlyPageViews?: any;
+  website?: any;
 };
 
 export function Code(props: any) {
@@ -95,7 +96,7 @@ const components = {
   },
 };
 
-const BlogPost: React.FC<Props> = ({ post, monthlyPageViews }) => {
+const BlogPost: React.FC<Props> = ({ post, monthlyPageViews, website }) => {
   const imageProps: any = useNextSanityImage(client, post.mainImage);
 
   return (
@@ -119,7 +120,7 @@ const BlogPost: React.FC<Props> = ({ post, monthlyPageViews }) => {
         />
         <h3>
           {post.author} | {format(parseISO(post.publishedAt), "MMMM dd, yyyy")}{" "}
-          | {monthlyPageViews} Views
+          | {monthlyPageViews} Views | {website}
         </h3>
         <div className="prose lg:prose-2xl dark:prose-invert">
           <PortableText value={post.body} components={components} />
@@ -142,6 +143,7 @@ export const getStaticProps = async ({ params }: any) => {
   return {
     props: {
       monthlyPageViews: pageViews,
+      website: website,
     },
   };
 };
