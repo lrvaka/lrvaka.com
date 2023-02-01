@@ -5,16 +5,13 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        {/* Global Site Tag (gtag.js) - Google Analytics */}
+        {/* Umami Analytics */}
         <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-          `,
-          }}
-        />
+          async
+          defer
+          data-website-id="5508f933-9bbf-4bfa-962c-db9b69428f34"
+          src="https://umami-lrvaka-com.vercel.app/umami.js"
+        ></script>
       </Head>
       <body className=" bg-gray-100 text-black dark:bg-gray-900 dark:text-white">
         <Main />
