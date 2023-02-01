@@ -21,6 +21,7 @@ Refractor.registerLanguage(sh);
 
 type Props = {
   post: any;
+  monthlyPageViews: any;
 };
 
 export function Code(props: any) {
@@ -94,32 +95,8 @@ const components = {
   },
 };
 
-const BlogPost: React.FC<Props> = ({ post }) => {
+const BlogPost: React.FC<Props> = ({ post, monthlyPageViews }) => {
   const imageProps: any = useNextSanityImage(client, post.mainImage);
-
-  useEffect(() => {
-    const fetchPageViews = async () => {
-      try {
-        const umami = new UmamiAPIClient(
-          "umami-lrvaka-com.vercel.app",
-          "lrvaka",
-          "wrether123"
-        );
-
-        const website = await umami.getWebsiteBy(
-          "domain",
-          "lrvaka-com.vercel.app"
-        );
-
-        const pageviews = await website.getPageviews();
-        const metrics = await website.getMetrics();
-        console.log(pageviews);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchPageViews();
-  }, []);
 
   return (
     <>
@@ -142,7 +119,7 @@ const BlogPost: React.FC<Props> = ({ post }) => {
         />
         <h3>
           {post.author} | {format(parseISO(post.publishedAt), "MMMM dd, yyyy")}{" "}
-          |
+          | {monthlyPageViews} Views
         </h3>
         <div className="prose lg:prose-2xl dark:prose-invert">
           <PortableText value={post.body} components={components} />
@@ -152,4 +129,20 @@ const BlogPost: React.FC<Props> = ({ post }) => {
   );
 };
 
+export const getStaticProps = async ({ params }: any) => {
+  const umami = new UmamiAPIClient(
+    "umami-lrvaka-com.vercel.app",
+    "lrvaka",
+    "wrether123"
+  );
+
+  const website = await umami.getWebsiteBy("domain", "lrvaka-com.vercel.app");
+  const pageViews = await website.getPageviews();
+
+  return {
+    props: {
+      monthlyPageViews: pageViews,
+    },
+  };
+};
 export default BlogPost;
