@@ -16,6 +16,7 @@ export default function App({ Component, pageProps }: AppProps) {
       `}</style>
       {/* Umami Analytics */}
       <Script
+        strategy="lazyOnload"
         async
         defer
         data-website-id="5508f933-9bbf-4bfa-962c-db9b69428f34"
