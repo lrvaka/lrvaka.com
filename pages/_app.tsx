@@ -14,12 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
           font-family: ${inter.style.fontFamily};
         }
       `}</style>
-      {/* Umami Analytics */}
-      <Script
-        strategy="lazyOnload"
-        data-website-id="5508f933-9bbf-4bfa-962c-db9b69428f34"
-        src="https://umami-lrvaka-com.vercel.app/umami.js"
-      />
+   
       <ThemeProvider attribute="class">
         <Component {...pageProps} />
       </ThemeProvider>
