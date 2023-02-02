@@ -120,7 +120,7 @@ const BlogPost: React.FC<Props> = ({ post, monthlyPageViews, website }) => {
         />
         <h3>
           {post.author} | {format(parseISO(post.publishedAt), "MMMM dd, yyyy")}{" "}
-          | {monthlyPageViews} Views | {website}
+          {/* | {monthlyPageViews} Views | {website} */}
         </h3>
         <div className="prose lg:prose-2xl dark:prose-invert">
           <PortableText value={post.body} components={components} />
@@ -130,21 +130,21 @@ const BlogPost: React.FC<Props> = ({ post, monthlyPageViews, website }) => {
   );
 };
 
-export const getStaticProps = async ({ params }: any) => {
-  const umami = new UmamiAPIClient(
-    "umami-lrvaka-com.vercel.app",
-    "lrvaka",
-    "wrether123"
-  );
+// export const getStaticProps = async ({ params }: any) => {
+//   const umami = new UmamiAPIClient(
+//     "umami-lrvaka-com.vercel.app",
+//     "lrvaka",
+//     "wrether123"
+//   );
 
-  const website = await umami.getWebsiteBy("domain", "lrvaka-com.vercel.app");
-  const pageViews = await website.getPageviews();
+//   const website = await umami.getWebsiteBy("domain", "lrvaka-com.vercel.app");
+//   const pageViews = await website.getPageviews();
 
-  return {
-    props: {
-      monthlyPageViews: pageViews,
-      website: website,
-    },
-  };
-};
+//   return {
+//     props: {
+//       monthlyPageViews: pageViews,
+//       website: website,
+//     },
+//   };
+// };
 export default BlogPost;
